@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     HO_TEN: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     },
     NGAY_SINH: {
       type: DataTypes.DATE,
@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'TT_BAO_MAT',
+    tableName: 'TT_CA_NHAN',
     freezeTableName: true,
     timestamps: false,
   });

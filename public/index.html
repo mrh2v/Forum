@@ -26,11 +26,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-style="{'margin-top' : !user ? '1%' : '0%' }">
-        <form name="formLogin" ng-if="!user">
-          <input type="text" style="width: 20%;" placeholder="Đăng nhập" required minlength="5" maxlength="50" ng-model="tk.username" />
-          <input type="password" style="width: 20%;" placeholder="Mật khẩu" required minlength="6" maxlength="50" ng-model="tk.password" />
-          <button class="btn btn-sm" ng-disabled="formLogin.$invalid" ng-click="login(tk)">Đăng nhập</button>
-          <b style="color: white; cursor: pointer;" title="Đăng ký" ui-sref="register">Đăng ký</b>
+        <form name="formLogin" ng-if="!user" ng-include="tempLogin">
         </form>
         <span ng-if="user" ng-include="tempisLogin">
         </span>
@@ -41,15 +37,14 @@
   <div class="container" style="margin-top: 2%;">
     <ul class="navbar-nav nav">
       <li><a>Hoạt động</a></li>
-      <li><a>Nội quy</a></li>
     </ul>
   </div>
   <div class="breadcrumb container">
     <ol class="breadcrumb">
-      <li>
+      <li ui-sref="home">
         <a class="glyphicon glyphicon-home"></a>
       </li>
-      <li><a>Ghi danh</a></li>
+      <li ng-repeat="title in titles" ui-sref="{{title.state}}"><a ng-bind="title.name"></a></li>
     </ol>
   </div>
   <div style="min-height: 500px;">
@@ -60,12 +55,18 @@
     <span>
     <img ng-src="{{user.AVATAR}}" height="50px" title="{{user.ten}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
     <ul class="dropdown-menu">
-      <li><a><i class="fa fa-id-card-o"></i> Thông tin cá nhân</a></li>
-      <li><a><i class="fa fa-key"></i> Đổi mật khẩu</a></li>
+      <li ui-sref="ttcn"><a><i class="fa fa-id-card-o"></i> Thông tin cá nhân</a></li>
+      <li ui-sref="ttcn.matkhau1"><a><i class="fa fa-key"></i> Đổi mật khẩu</a></li>
       <li role="separator" class="divider"></li>
-      <li><a><i class="glyphicon glyphicon-log-out"></i> Đăng xuất</a></li>
+      <li ng-click="logout()"><a><i class="glyphicon glyphicon-log-out"></i> Đăng xuất</a></li>
     </ul>
   </span>
+  </script>
+  <script type="text/ng-template" id="tempLogin.html">
+    <input type="text" style="width: 20%;" placeholder="Đăng nhập" required minlength="5" maxlength="50" ng-model="taikhoan.username" />
+    <input type="password" style="width: 20%;" placeholder="Mật khẩu" required minlength="6" maxlength="50" ng-model="taikhoan.password" />
+    <button class="btn btn-sm" ng-disabled="formLogin.$invalid" ng-click="login(taikhoan)">Đăng nhập</button>
+    <b style="color: white; cursor: pointer;" title="Đăng ký" ui-sref="register">Đăng ký</b>
   </script>
   <!-- lib -->
   <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
@@ -82,7 +83,11 @@
   <script type="text/javascript" src="/textAngular/dist/textAngular.min.js"></script>
   <!-- controller -->
   <script type="text/javascript" src="/index.js"></script>
+  <script type="text/javascript" src="/trangchu/trangchu.js"></script>
   <script type="text/javascript" src="/dangky/register.js"></script>
+  <script type="text/javascript" src="/dangnhap/dangnhap.js"></script>
+  <script type="text/javascript" src="/timmatkhau/timmatkhau.js"></script>
+  <script type="text/javascript" src="/thongtincanhan/thongtincanhan.js"></script>
 </body>
 
 </html>

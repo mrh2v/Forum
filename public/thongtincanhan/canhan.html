@@ -1,0 +1,57 @@
+<div style="background-color: cadetblue;" class="register-div">
+  <div style="padding-top: 1.5%;padding-bottom: 1.8%;">
+    <b><i class="glyphicon glyphicon-penci" style="margin-left: 5%;"></i>Thông tin cá nhân của {{user.ten}}</b>
+  </div>
+</div>
+<div class="row-container">
+  <form class="formttcn" name="formTTCN" ng-hide="!tk">
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Họ và tên </i> <i ng-if="formTTCN.hoten.$error.minlength" style="color:red;"> (5 kí tự trở lên)</i>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" placeholder="Nhập họ và tên" name="hoten" minlength="6" maxlength="50" ng-model="tk.HO_TEN">
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Quê quán</i>
+      <div class="col-sm-5">
+        <select class="form-control" ng-model="tk.QUE_QUAN">
+          <option value selected>Chọn quê quán</option>
+          <option value="Hà Nội">Hà Nội</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Ngày sinh</i>
+      <div class="col-sm-5">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="tk.ngaysinh" is-open="ngaysinh" datepicker-options="dateOptions" close-text="Close" readonly="true" placeholder="Chọn ngày tháng năm sinh" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ngaysinh = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Số chứng minh nhân dân</i> <i style="color: red;" ng-if="formTTCN.cmnd.$error.pattern">Số CMND không hợp lệ</i>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" placeholder="Nhập số chứng minh nhân dân" pattern="[0-9]{9,13}" name="cmnd" ng-model="tk.SO_CMND">
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Số điện thoại</i> <i style="color: red;" ng-if="formTTCN.sdt.$error.pattern">Số điện thoại không hợp lệ</i>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" name="sdt" ng-model="tk.SO_DT">
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Email</i> <i style="color: red;" ng-if="formTTCN.emailInput.$error.email">Email không hợp lệ</i>
+      <div class="col-sm-5">
+        <input type="email" class="form-control" placeholder="Nhập email cá nhân" name="emailInput" ng-model="tk.EMAIL">
+      </div>
+    </div>
+    <div class="text-right register-div" style="margin-right: 5%;">
+      <button class="btn btn-primary" ng-disabled="formTTCN.$invalid" ng-click="saveTT(tk)">Lưu thay đổi</button>
+      <button class="btn btn-warning" ng-click="cancel()">Hủy bỏ</button>
+    </div>
+  </form>
+</div>

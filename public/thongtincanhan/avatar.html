@@ -1,0 +1,30 @@
+<div style="background-color: cadetblue;" class="register-div">
+  <div style="padding-top: 1.5%;padding-bottom: 1.8%;">
+    <b><i class="glyphicon glyphicon-penci" style="margin-left: 5%;"></i>Ảnh đại diện cá nhân của {{user.ten}}</b>
+  </div>
+</div>
+<div class="row-container">
+  <div class="col-md-12">
+    <div class="col-md-4">
+      <div class="col-md-12 space-top">
+        <label>Tên hiển thị :</label>
+      </div>
+      <div class="col-md-12 space-top">
+        <input type="text" name="tenhienthi" class="form-control" ng-model="tk.USER.TEN_HIEN_THI" maxlength="30">
+      </div>
+    </div>
+    <div class="col-md-4 text-center">
+      <div style="height: 205px; width: 205px; border:0.5px dashed burlywood; cursor: copy;" ngf-select="upload($file)" ngf-resize="{width: 200, height: 200}" ngf-drop="upload($file)"> 
+        <img ng-src="{{tk.USER.AVATAR}}" ng-if="tk.USER.AVATAR" height="200px" width="200px">
+        <div style="margin-top: 93px;"><i ng-if="!tk.USER.AVATAR">Bạn chưa có ảnh đại diện</i></div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-warning" ng-if="tk.USER.AVATAR" ng-click="delAvatar()">Xóa ảnh đại diện</button>
+    </div>
+  </div>
+  <div class="col-md-12 text-right" style="margin-top: 5%;">
+    <button class="btn btn-primary" ng-click="saveTT(tk)" ng-if="tk" ng-disabled="tk.USER.AVATAR == backup.USER.AVATAR && tk.USER.TEN_HIEN_THI == backup.USER.TEN_HIEN_THI">Lưu thay đổi</button>
+    <button class="btn btn-warning" ng-click="cancel()">Hủy bỏ</button>
+  </div>
+</div>

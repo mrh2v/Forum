@@ -1,27 +1,57 @@
-/*#img-new {
-  background-image: url("../img/news.jpg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 50px;
-  cursor: pointer;
-  width: 70%;
-}*/
-/*LOGIN*/
-
 .navbar-inverse {
   background-color: #007196;
   border-color: blue;
 }
+
 .navbar {
   min-height: 0;
 }
+
 .li-nar:hover {
   background-color: #90bdc7;
 }
+
 .breadcrumb {
   margin-bottom: 0px;
   padding-top: 0.5%;
 }
+
 .register-div {
   margin-bottom: 2%;
+}
+
+.ttcn {
+  margin-top: 1%;
+  cursor: pointer;
+}
+
+.ttcn:hover {
+  background-color: burlywood;
+  color: red;
+}
+
+.menu-ttcn {
+  margin-left: 5%;
+}
+
+.formttcn {
+  margin-left: 2%;
+}
+
+.space-top {
+  margin-top: 1%;
+}
+
+.breadcrumb {
+  padding: 4px 10px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1080px;
+  }
+}
+
+.padding-title {
+  padding: 5px 25px;
 }

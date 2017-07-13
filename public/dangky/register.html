@@ -1,5 +1,6 @@
 <div class="container">
-  <h4>Đăng ký tài khoản</h4>
+  <div class="col-md-6"><h4>Đăng ký tài khoản</h4></div>
+  <div class="col-md-6 text-right"><a style="cursor: help;" ui-sref="timmk"><i class="fa fa-meh-o"></i> Quên mật khẩu</a></div>
 </div>
 <div class="container" style="border: 1px solid blue;">
   <div class="row" style="background-color: #2f5aa9; height: 40px;color: white;">
@@ -9,54 +10,57 @@
     <div class="register-div">
       <b>Thông tin bắt buộc</b>
     </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" name="formRegister">
       <div class="form-group">
-        <i class="col-sm-2 control-label">Tên đăng nhập</i>
+        <i class="col-sm-3 control-label">Tên đăng nhập (<span style="color: red;">*</span>)</i> <i style="color: red;" ng-if="formRegister.name.$error.minlength">Tên đăng nhập quá ngắn</i> <i ng-if="errorTk && !checking" style="color: red;">
+          Tên đăng nhập đã đươc sử dụng
+        </i>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="Nhập tên đăng nhập">
+          <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" name="name" ng-model="tk.TEN_DANG_NHAP" minlength="5" maxlength="50" required="true" pattern="[0-9,a-z,A-Z]{5,50}" ng-blur="checkTK(tk.TEN_DANG_NHAP)">
         </div>
       </div>
       <hr/>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Mật mã</i>
+        <i class="col-sm-3 control-label">Mật mã (<span style="color: red;">*</span>)</i> <i style="color: red;" ng-if="formRegister.mk.$error.minlength">Mật khẩu phải từ 6 kí tự trở lên</i>
         <div class="col-sm-5">
-          <input type="password" class="form-control" placeholder="Nhập mật mã">
+          <input type="password" class="form-control" placeholder="Nhập mật mã" minlength="6" maxlength="50" required="true" name="mk" ng-model="tk.MAT_KHAU">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Nhắc lại mật mã</i>
+        <i class="col-sm-3 control-label">Nhắc lại mật mã (<span style="color: red;">*</span>)</i>
         <div class="col-sm-5">
-          <input type="password" class="form-control" placeholder="Nhập lại mật mã">
+          <input type="password" class="form-control" ng-style="{'border-color' : tk.MAT_KHAU !== tk.matkhau ? 'red' : '' }" placeholder="Nhập lại mật mã" ng-model="tk.matkhau" required="true">
         </div>
       </div>
       <hr/>
       <div class="register-div">
-        <b>Thông tin bảo mật (Không bắt buộc)</b>
+        <b>Thông tin bảo mật (bắt buộc)</b>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Mật khẩu cấp 2</i>
+        <i class="col-sm-3 control-label">Mật khẩu cấp 2 (<span style="color: red;">*</span>)</i> <i style="color: red;" ng-if="formRegister.mk2.$error.minlength">Mật khẩu phải từ 10 kí tự trở lên</i>
         <div class="col-sm-5">
-          <input type="password" class="form-control" placeholder="Nhập mật khẩu cáp 2">
+          <input type="password" class="form-control" placeholder="Nhập mật khẩu cấp 2" minlength="10" maxlength="50" required="true" name="mk2" ng-model="tk.MAT_KHAU_2">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Nhập lại mật khẩu cấp 2</i>
+        <i class="col-sm-3 control-label">Nhập lại mật khẩu cấp 2 (<span style="color: red;">*</span>)</i>
         <div class="col-sm-5">
-          <input type="password" class="form-control" placeholder="Nhập lại mật khẩu cáp 2">
+          <input type="password" class="form-control" placeholder="Nhập lại mật khẩu cấp 2" required="true" ng-style="{'border-color' : tk.MAT_KHAU_2 !== tk.matkhau2 ? 'red' : '' }" ng-model="tk.matkhau2">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Câu hỏi bí mật</i>
+        <i class="col-sm-3 control-label">Câu hỏi bí mật (<span style="color: red;">*</span>)</i>
         <div class="col-sm-5">
-          <select class="form-control">
+          <select class="form-control" ng-model="tk.cauhoi" required="true">
             <option value selected>Chọn câu hỏi bí mật</option>
+            <option ng-repeat="qs in questions" value="{{qs}}">{{qs}}</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Câu hỏi bí mật</i>
+        <i class="col-sm-3 control-label">Câu trả lời (<span style="color: red;">*</span>)</i> <i ng-if="formRegister.traloi.$error.minlength"> (5 kí tự trở lên)</i>
         <div class="col-sm-5">
-          <input type="password" class="form-control" placeholder="Nhập câu trả lời">
+          <input type="password" class="form-control" name="traloi" placeholder="Nhập câu trả lời" ng-model="tk.TRA_LOI" required="true" minlength="5" maxlength="50">
         </div>
       </div>
       <hr/>
@@ -64,43 +68,47 @@
         <b>Thông tin bổ sung</b>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Họ và tên</i>
+        <i class="col-sm-3 control-label">Họ và tên </i> <i ng-if="formRegister.hoten.$error.minlength"> (5 kí tự trở lên)</i>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="Nhập họ và tên">
+          <input type="text" class="form-control" placeholder="Nhập họ và tên" name="hoten" minlength="6" maxlength="50" ng-model="tk.HO_TEN">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Quê quán</i>
+        <i class="col-sm-3 control-label">Quê quán</i>
         <div class="col-sm-5">
-          <select class="form-control">
+          <select class="form-control" ng-model="tk.QUE_QUAN">
             <option value selected>Chọn quê quán</option>
+            <option value="Hà Nội">Hà Nội</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Ngày sinh</i>
+        <i class="col-sm-3 control-label">Ngày sinh</i>
         <div class="col-sm-5">
-          <select class="form-control">
-            <option value selected>Chọn ngày sinh</option>
-          </select>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="tk.ngaysinh" is-open="ngaysinh" datepicker-options="dateOptions" close-text="Close" readonly="true" placeholder="Chọn ngày tháng năm sinh" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ngaysinh = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+          </p>
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Số chứng minh nhân dân</i>
+        <i class="col-sm-3 control-label">Số chứng minh nhân dân</i> <i style="color: red;" ng-if="formRegister.cmnd.$error.pattern">Số CMND không hợp lệ</i>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="Nhập số chứng minh nhân dân">
+          <input type="text" class="form-control" placeholder="Nhập số chứng minh nhân dân" pattern="[0-9]{9,13}" name="cmnd" ng-model="tk.SO_CMND">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Số điện thoại</i>
+        <i class="col-sm-3 control-label">Số điện thoại</i> <i style="color: red;" ng-if="formRegister.sdt.$error.pattern">Số điện thoại không hợp lệ</i>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="Nhập số điện thoại">
+          <input type="text" class="form-control" placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" name="sdt" ng-model="tk.SO_DT">
         </div>
       </div>
       <div class="form-group">
-        <i class="col-sm-2 control-label">Email</i>
+        <i class="col-sm-3 control-label">Email</i> <i style="color: red;" ng-if="formRegister.emailInput.$error.email">Email không hợp lệ</i>
         <div class="col-sm-5">
-          <input type="email" class="form-control" placeholder="Nhập email cá nhân">
+          <input type="email" class="form-control" placeholder="Nhập email cá nhân" name="emailInput" ng-model="tk.EMAIL">
         </div>
       </div>
     </form>
@@ -227,10 +235,10 @@
   </div>
   <hr/>
   <div style="margin:1%;" class="text-center">
-    <input type="checkbox" /> <b>Tôi đã đọc và đồng ý với những quy định của diễn đàn</b>
+    <input type="checkbox" ng-model="checkNoiQuy" /> <b>Tôi đã đọc và đồng ý với những quy định của diễn đàn</b>
   </div>
 </div>
 <div class="text-center " style="margin-top: 1%; ">
-  <button class="btn btn-primary ">Đăng ký thành viên để thảo luận, chia sẻ kiến thức</button>
+  <button class="btn btn-primary" ng-disabled="!checkNoiQuy || formRegister.$invalid || checking || errorTk" ng-click="dangky(tk, !checkNoiQuy || formRegister.$invalid || checking || errorTk)">Đăng ký thành viên để thảo luận, chia sẻ kiến thức</button>
   <button class="btn btn-primary ">Hủy bỏ tất cả</button>
   </div

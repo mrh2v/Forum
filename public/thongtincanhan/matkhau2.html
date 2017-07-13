@@ -1,0 +1,31 @@
+<div style="background-color: cadetblue;" class="register-div">
+  <div style="padding-top: 1.5%;padding-bottom: 1.8%;">
+    <b><i class="glyphicon glyphicon-penci" style="margin-left: 5%;"></i>Thay đổi mật khẩu bảo mật an toàn</b>
+  </div>
+</div>
+<div class="row-container" style="margin-top: 5%;">
+  <form class="formttcn" name="formMK">
+    <div class="form-group row">
+      <b class="col-sm-3 control-label">Mật khẩu cấp 2 hiện tại (<span style="color: red;">*</span>)</b>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" placeholder="Nhập mật khẩu hiện tại" required="true" ng-model="tknew.matkhau">
+      </div>
+    </div>
+    <div class="form-group row">
+      <b class="col-sm-3 control-label">Mật khẩu cấp 2 mới(<span style="color: red;">*</span>)</b> <i style="color: red;" ng-if="formMK.mk.$error.minlength">Mật khẩu phải từ 10 kí tự trở lên</i>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" placeholder="Nhập mật khẩu mới" minlength="10" maxlength="50" required="true" name="mk" ng-model="tknew.matkhaunew">
+      </div>
+    </div>
+    <div class="form-group row">
+      <b class="col-sm-3 control-label">Nhập lại mật khẩu mới </b>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" ng-style="{'border-color' : tknew.matkhaurequired !== tknew.matkhaunew ? 'red' : '' }" placeholder="Xác nhận mật khẩu mới" ng-model="tknew.matkhaurequired" required="true">
+      </div>
+    </div>
+    <div class="space-top text-center">
+      <button class="btn btn-primary" ng-disabled="formMK.$invalid || tknew.matkhaurequired !== tknew.matkhaunew" ng-click="savePass(tknew, formMK.$invalid)">Lưu thay đổi</button>
+      <button class="btn btn-warning" ng-click="cancel()">Hủy bỏ</button>
+    </div>
+  </form>
+</div>

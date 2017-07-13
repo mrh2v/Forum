@@ -1,0 +1,41 @@
+<div class="container" style="margin-top: 3%;">
+  <div class="col-md-6 col-md-offset-3" style="border: 1px solid;">
+    <div style="background-color: cadetblue;" class="text-center row">
+      <div style="padding-top: 1.5%;padding-bottom: 1.8%;">
+        <b>THÔNG BÁO</b>
+      </div>
+    </div>
+    <div class="row alert alert-danger" ng-if="logined">
+      <i>Tài khoản hoặc mật khẩu không đúng</i>
+    </div>
+    <div class="row" style="margin-top: 1%;">
+      Bạn phải đăng nhập hoặc <a ui-sref="register">Đăng ký </a> để tham gia vào hoạt động của diễn đàn
+    </div>
+    <hr/>
+    <label>Đăng nhập</label>
+    <div class="row">
+      <form style="margin-left: 5%;" name="formLogin">
+        <div class="form-group row">
+          <span class="col-sm-3 control-label">Tên đăng nhập</span>
+          <div class="col-sm-5">
+            <input type="password" class="form-control" placeholder="Nhập tên đăng nhập" required="true" ng-model="tk.username" minlength="5" maxlength="50">
+          </div>
+        </div>
+        <div class="form-group row">
+          <span class="col-sm-3 control-label">Mật khẩu</span>
+          <div class="col-sm-5">
+            <input type="password" class="form-control" placeholder="Nhập mật khẩu" required="true" ng-model="tk.password" minlength="6" maxlength="50">
+          </div>
+        </div>
+        <hr>
+        <div class="row text-center">
+          <a style="cursor: help;" ui-sref="timmk"><i class="fa fa-meh-o"></i> Quên mật khẩu</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-3 text-center" style="margin-top: 2%;">
+    <button class="btn btn-primary" ng-disabled="formLogin.$invalid" ng-click="login1(tk)">Đăng nhập hệ thống</button>
+    <button class="btn btn-primary">Hủy bỏ</button>
+  </div>
+</div>

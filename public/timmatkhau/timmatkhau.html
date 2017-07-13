@@ -1,0 +1,101 @@
+<div style="background-color: cadetblue; margin-top: 1%;" class="container">
+  <div>
+    <b><i class="glyphicon glyphicon-penci"></i>Hỗ trợ tìm lại mật khẩu</b>
+  </div>
+</div>
+<div class="container" style="border: 0.5px solid;" ng-if="!thuchien">
+  <div class="row space-top">
+    <div class="col-md-6 col-md-offset-2">
+      <input type="radio" value="1" ng-model="phuongan" />
+      <span> Sử dụng mật khẩu cấp 2</span>
+    </div>
+  </div>
+  <div class="row space-top">
+    <div class="col-md-6 col-md-offset-2">
+      <input type="radio" value="2" ng-model="phuongan" />
+      <span> Sử dụng câu hỏi bí mật</span>
+    </div>
+  </div>
+  <div class="row space-top" style="margin-bottom: 2%;">
+    <div class="col-md-6 col-md-offset-2">
+      <button class="btn" ng-click="next(phuongan)">Tiếp tục <i class="glyphicon glyphicon-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+<div class="container" style="border: 0.5px solid;" ng-if="thuchien == 1">
+  <i ng-if="checking" class="fa fa-spin fa-pulse fa-spinner fa-2x" style="color: red;position: absolute;top: 50%;left: 50%;z-index: 9999;"></i>
+  <form name="formMK2">
+    <div class="form-group row space-top">
+      <i class="col-sm-3 control-label">Tên tài khoản</i>
+      <div class="col-sm-5">
+        <input type="textH" class="form-control" placeholder="Nhập tên tài khoản" required="true" ng-model="tk.TEN_DANG_NHAP">
+      </div>
+    </div>
+    <div class="form-group row space-top">
+      <i class="col-sm-3 control-label">Mật khẩu cấp 2</i>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" placeholder="Nhập mật khẩu cấp 2" required="true" ng-model="tk.MAT_KHAU">
+      </div>
+    </div>
+  </form>
+  <div class="row space-top" style="margin-bottom: 2%;">
+    <div class="col-md-6 col-md-offset-3">
+      <button class="btn" ng-click="backward(1)" ng-disabled="checking"><i class="glyphicon glyphicon-arrow-left"></i> Quay lại</button>
+      <button class="btn" ng-click="next1(tk)" ng-disabled="formMK2.$invalid || checking">Tiếp tục <i class="glyphicon glyphicon-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+<div class="container" style="border: 0.5px solid;" ng-if="thuchien == 2 || thuchien == 4 ">
+  <form name="formMK">
+    <div class="form-group row space-top">
+      <i class="col-sm-3 control-label">Mật khẩu mới (<span style="color: red;">*</span>)</i><i style="color: red;" ng-if="formMK.mk.$error.minlength">Mật khẩu phải từ 6 kí tự trở lên</i>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" name="mk" placeholder="Nhập mật khẩu mới" required="true" ng-model="mknew">
+      </div>
+    </div>
+    <div class="form-group row space-top">
+      <i class="col-sm-3 control-label">Nhập lại mật khẩu mới(<span style="color: red;">*</span>)</i>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" ng-style="{'border-color': mknew != mknew1 ? 'red': ''}" placeholder="Nhập mật khẩu mới" minlength="6" maxlength="50" required="true" ng-model="mknew1">
+      </div>
+    </div>
+  </form>
+  <div class="row space-top" style="margin-bottom: 2%;">
+    <div class="col-md-6 col-md-offset-3">
+      <button class="btn" ng-click="backward(1)"><i class="glyphicon glyphicon-arrow-left"></i> Quay lại</button>
+      <button class="btn btn-success" ng-click="next2(mknew)" ng-disabled="formMK.$invalid || mknew != mknew1">Lưu thay đổi <i class="glyphicon glyphicon-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+<div class="container" style="border: 0.5px solid;" ng-if="thuchien == 3">
+  <i ng-if="checking" class="fa fa-spin fa-pulse fa-spinner fa-2x" style="color: red;position: absolute;top: 50%;left: 50%;z-index: 9999;"></i>
+  <form name="formQS">
+    <div class="form-group row space-top">
+      <i class="col-sm-3 control-label">Tên tài khoản</i>
+      <div class="col-sm-5">
+        <input type="textH" class="form-control" placeholder="Nhập tên tài khoản" required="true" ng-model="tk.TEN_DANG_NHAP">
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Câu hỏi bí mật</i>
+      <div class="col-sm-5">
+        <select class="form-control" ng-model="tk.cauhoi" required="true">
+          <option value selected>Chọn câu hỏi bí mật</option>
+          <option ng-repeat="qs in questions" value="{{qs}}">{{qs}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <i class="col-sm-3 control-label">Câu trả lời </i> <i ng-if="formQS.traloi.$error.minlength"> (Tối thiểu 5 kí tự trở lên)</i>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="traloi" placeholder="Nhập câu trả lời" ng-model="tk.TRA_LOI" required="true" minlength="5" maxlength="50">
+      </div>
+    </div>
+  </form>
+  <div class="row space-top" style="margin-bottom: 2%;">
+    <div class="col-md-6 col-md-offset-3">
+      <button class="btn" ng-click="backward(3)" ng-disabled="checking"><i class="glyphicon glyphicon-arrow-left"></i> Quay lại</button>
+      <button class="btn" ng-click="next3(tk)" ng-disabled="formQS.$invalid || checking">Tiếp tục <i class="glyphicon glyphicon-arrow-right"></i></button>
+    </div>
+  </div>
+</div>

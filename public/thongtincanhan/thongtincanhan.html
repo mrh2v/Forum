@@ -1,0 +1,51 @@
+<div class="container">
+  <div ng-if="!user" class="alert alert-danger text-center" style="margin-top:2%;">
+    <i>Bạn phải đăng nhập để thực hiện tác vụ này</i>
+  </div>
+  <div ng-show="user" class="row" style="margin-top: 2%;">
+    <div class="col-md-3" style="border: 1px solid blue;">
+      <div class="row text-center" style="background-color: cadetblue;">
+        <div style="padding-top: 5%;padding-bottom: 5%;"><b><i class="fa fa-cog"></i>Thiết lập của tôi</b></div>
+      </div>
+      <div class="menu-ttcn">
+        <div class="row">
+          <label><i class="glyphicon glyphicon-user"></i>Thông tin cá nhân</label>
+          <div class="col-md-12 ttcn">
+            <a title="Thay đổi thông tin cá nhân" ui-sref="ttcn.canhan">Thay đổi thông tin cá nhân</a>
+          </div>
+          <div class="col-md-12 ttcn">
+            <a title="Thay đổi ảnh đại diện" ui-sref="ttcn.avatar">Thay đổi ảnh đại diện</a>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+          <label><i class="fa fa-lock"></i> Thông tin tài khoản</label>
+          <div class="col-md-12 ttcn">
+            <a title="Thay đổi mật khẩu" ui-sref="ttcn.matkhau1">Thay đổi mật khẩu</a>
+          </div>
+          <div class="col-md-12 ttcn">
+            <a title="Thay đổi mật khẩu 2" ui-sref="ttcn.matkhau2">Thay đổi mật khẩu 2</a>
+          </div>
+          <div class="col-md-12 ttcn">
+            <a title="Thay đổi câu hỏi bí mật" ui-sref="ttcn.cauhoi">Thay đổi câu hỏi bí mật</a>
+          </div>
+        </div>
+        <hr/>
+        <div class="row" style="margin-bottom: 5%;">
+          <label><i class="fa fa-sticky-note-o"></i> Lịch sử hoạt động</label>
+          <div class="col-md-12 ttcn">
+            <a title="Chủ đề đã đăng">Chủ đề đã đăng</a>
+          </div>
+          <div class="col-md-12 ttcn">
+            <a title="Bình luận mới nhất">Bình luận mới nhất</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div style="border: 0.5px solid #b3b3d2; min-height: 400px">
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>

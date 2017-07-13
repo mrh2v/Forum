@@ -18,9 +18,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    MAT_KHAU_CAP_2: {
+    MAT_KHAU_2: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: false
     }
   }, {
     tableName: 'TT_BAO_MAT',
