@@ -1,0 +1,28 @@
+<div class="container space-top">
+  <div style="background-color: cadetblue;" class="row">
+    <div class="col-md-8 padding-title">
+      <a style="font-weight: 700;cursor: pointer;">PHỤ MỤC</a>
+    </div>
+    <div class="col-md-4 padding-title">
+      <b>Bài mới</b>
+    </div>
+  </div>
+  <div class="row dmc space-top" style="min-height: 70px;" ng-repeat="dm in dmc">
+    <div class="col-md-1">
+      <i class="fa fa-bandcamp fa-3x" style="color: cadetblue;"></i>
+    </div>
+    <div class="col-md-6">
+      <a ng-bind="dm.TEN_DANH_MUC" style="font-weight: 600;" ng-click="goDMC(dm)"></a>
+    </div>
+    <div class="col-md-1">
+      <div>
+        <i class="fa fa-newspaper-o"></i> <b ng-bind="dm.baiviet"></b>
+      </div>
+      <div>
+        <i class="fa fa-comment-o"></i> <span ng-bind="dm.binhluan"></span>
+      </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+</div>

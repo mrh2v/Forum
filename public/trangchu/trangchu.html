@@ -1,25 +1,41 @@
-<div class="container" style=" border: 1px solid">
-  <div style="background-color: cadetblue;" class="row">
-    <div style="padding: 5px;">
-      <b>TỔNG HỢP</b>
+<div ng-show="!hideHome">
+  <div class="container" style=" border: 1px solid">
+    <div style="background-color: cadetblue;" class="row">
+      <div style="padding: 5px;">
+        <b>TỔNG HỢP</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" style="height: 300px;border-right: 1px solid brown;">
+        <div class="row">TOP Thành viên</div>
+      </div>
+      <div class="col-md-8" style="height: 300px;">
+        <div class="row">Bài viết mới</div>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4" style="height: 300px;border-right: 1px solid brown;">
-      <div class="row">TOP Thành viên</div>
+  <div class="container space-top" ng-repeat="dm in danhMucNar">
+    <div style="background-color: cadetblue;" class="row">
+      <div class="col-md-8 padding-title">
+        <a ng-bind="dm.TEN_DANH_MUC" ng-click="goDanhMuc(dm)" style="font-weight: 700;cursor: pointer;"></a>
+      </div>
+      <div class="col-md-4 padding-title">
+        <b>Bài mới</b>
+      </div>
     </div>
-    <div class="col-md-8" style="height: 300px;">
-      <div class="row">Bài viết mới</div>
+    <div class="row dmc space-top" ng-repeat="dmc in dmCon[dm.ID]" style="min-height: 70px;">
+      <div class="col-md-1">
+        <i class="fa fa-bandcamp fa-3x" style="color: cadetblue;"></i>
+      </div>
+      <div class="col-md-6">
+        <a ng-bind="dmc.TEN_DANH_MUC" style="font-weight: 600;" ng-click="goDMC(dmc)"></a>
+      </div>
+      <div class="col-md-1">
+        <b ng-bind="soLuongBai[dmc.ID]"></b>
+      </div>
+      <div class="col-md-4">
+      </div>
     </div>
   </div>
 </div>
-<div class="container" style="height: 100px; margin-top: 2%;">
-  <div style="background-color: cadetblue;" class="row">
-    <div class="col-md-8 padding-title">
-      <b>CÔNG NGHỆ</b>
-    </div>
-    <div class="col-md-4 padding-title">
-    	<b>Bài mới</b>
-    </div>
-  </div>
-</div>
+<ui-view ng-show="hideHome"></ui-view>

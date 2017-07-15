@@ -29,13 +29,8 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
       controller: "dangnhapCtrl",
       controllerAs: "login"
     })
-    .state('home', {
-      url: '/trang-chu',
-      templateUrl: 'trangchu/trangchu.html',
-      controller: 'homeCtrl',
-      controllerAs: 'home'
-    })
-    .state('ttcn', {
+
+  .state('ttcn', {
       url: '/thiet-lap-ca-nhan',
       templateUrl: 'thongtincanhan/thongtincanhan.html',
       controller: 'ttcnCtrl',
@@ -72,12 +67,32 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
       controllerAs: 'cn'
     })
 
+  .state('home', {
+      url: '/trang-chu',
+      templateUrl: 'trangchu/trangchu.html',
+      controller: 'homeCtrl',
+      controllerAs: 'home'
+    })
+    .state('home.danhmuc', {
+      url: '/danh-muc/:id',
+      templateUrl: 'danhmuc/danhmuc.html',
+      controller: 'danhmucCtrl',
+      controllerAs: 'dm',
+      params: { danhmuc: null },
+    })
+    .state('home.dmc', {
+      url: '/danh-muc-chi-tiet/:id',
+      templateUrl: 'danhmuc/danhmucnho.html',
+      controller: 'dmcCtrl',
+      controllerAs: 'dmc',
+      params: { danhmuc: null },
+    })
 
 
 });
 app.run(function($state, $rootScope, $uibModal, callAPI, toastr) {
 
-  callAPI.get("danhmuc/get_all", { hienthi: true }, function(res) {
+  callAPI.get("danhmuc/get_all", { heso: 0 }, function(res) {
     $rootScope.danhMucNar = res;
   })
   $rootScope.questions = ["Tên hồi nhỏ của bạn là gì ?", "Con vật bạn yêu thích nhất là gì ?", "Trường tiểu học bạn tên gì ?", "Bạn thân hồi nhỏ của bạn là ai?"];
@@ -88,7 +103,7 @@ app.run(function($state, $rootScope, $uibModal, callAPI, toastr) {
     if (typeof(Storage) !== "undefined") {
       localStorage.clear();
     }
-    $state.go('home');
+    // $state.go('home');
   }
   $rootScope.tempisLogin = "temp-islogin.html";
   $rootScope.tempLogin = "tempLogin.html";
@@ -112,7 +127,7 @@ app.run(function($state, $rootScope, $uibModal, callAPI, toastr) {
         if ($state.current.name == "register" || $state.current.name == "login") {
           $state.go("home");
         } else {
-          $state.reload();
+          // $state.reload();
         }
       } else if (res) {
         toastr.warning("Tài khoản hoặc mật khẩu không đúng !");
@@ -131,38 +146,72 @@ app.run(function($state, $rootScope, $uibModal, callAPI, toastr) {
   }
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-    if (toState.name) {
-      if (toState.name.indexOf("ttcn") > -1) {
-        $rootScope.titles = [{ name: 'Thiết lập', state: 'ttcn' }];
-        var arr = toState.name.split(".");
-        if (arr[1]) {
+      if (toState.name) {
+        if (toState.name.indexOf("ttcn") > -1) {
+          $rootScope.titles = [{ name: 'Thiết lập', state: 'ttcn' }];
+          var arr = toState.name.split(".");
+          if (arr[1]) {
+            switch (arr[1]) {
+              case "canhan":
+                $rootScope.titles.push({ name: "Thông tin chi tiết", state: toState.name })
+                break;
+              case "cauhoi":
+                $rootScope.titles.push({ name: "Câu hỏi bí mật", state: toState.name })
+                break;
+              case "avatar":
+                $rootScope.titles.push({ name: "Ảnh đại diện", state: toState.name })
+                break;
+              case "matkhau1":
+                $rootScope.titles.push({ name: "Mật khẩu", state: toState.name })
+                break;
+              case "matkhau2":
+                $rootScope.titles.push({ name: "Mật khẩu an toàn", state: toState.name })
+                break;
+            }
+          }
+        } else if (toState.name == "register") {
+          $rootScope.titles = [{ name: 'Đăng kí', state: toState.name }];
+        } else if (toState.name == "login") {
+          $rootScope.titles = [{ name: 'Đăng nhập', state: toState.name }];
+        } else if (toState.name == "timmk") {
+          $rootScope.titles = [{ name: 'Tìm mật khẩu', state: toState.name }];
+        } else if (toState.name.indexOf("home") > -1) {
+          $rootScope.titles = [{ name: 'Trang chủ', state: "home" }];
+          $rootScope.hideHome = false;
+          var arr = toState.name.split(".");
+          if (arr[1]) {
+            $rootScope.hideHome = true;
+            $rootScope.titles.push({ name: ".....", state: toState.name })
+            if (toParams.danhmuc) $rootScope.titles[1].name = toParams.danhmuc;
+          }
+          /* switch (arr[1]) {
+             case "danhmuc":
+               $rootScope.titles.push({ name: ".....", state: toState.name })
+               if (toParams.danhmuc) $rootScope.titles[1].name = toParams.danhmuc;
+               break;
+             case "danhmuc":
+               $rootScope.titles.push({ name: ".....", state: toState.name })
+               if (toParams.danhmuc) $rootScope.titles[1].name = toParams.danhmuc;
+               break;
+           }*/
+        // }
+        /*if (arr[2]) {
           switch (arr[1]) {
-            case "canhan":
-              $rootScope.titles.push({ name: "Thông tin chi tiết", state: toState.name })
-              break;
-            case "cauhoi":
-              $rootScope.titles.push({ name: "Câu hỏi bí mật", state: toState.name })
-              break;
-            case "avatar":
-              $rootScope.titles.push({ name: "Ảnh đại diện", state: toState.name })
-              break;
-            case "matkhau1":
-              $rootScope.titles.push({ name: "Mật khẩu", state: toState.name })
-              break;
-            case "matkhau2":
-              $rootScope.titles.push({ name: "Mật khẩu an toàn", state: toState.name })
+            case "chude":
+              $rootScope.titles.push({ name: ".....", state: toState.name })
+              if (toParams.chude) $rootScope.titles[1].name = toParams.chude;
               break;
           }
-        }
-      } else if (toState.name == "register") {
-        $rootScope.titles = [{ name: 'Đăng kí', state: toState.name }];
-      } else if (toState.name == "login") {
-        $rootScope.titles = [{ name: 'Đăng nhập', state: toState.name }];
-      } else if (toState.name == "timmk") {
-        $rootScope.titles = [{ name: 'Tìm mật khẩu', state: toState.name }];
-      } else if (toState.name == "home") {
-        $rootScope.titles = [{ name: 'Trang chủ', state: toState.name }];
+        }*/
       }
+
+
+
+      // else if (toState.name == "home") {
+      //   $rootScope.titles = [{ name: 'Trang chủ', state: toState.name }];
+      // } else if (toState.name == "danhmuc") {
+      //   $rootScope.titles = [{ name: 'Danh mục', state: toState.name + "(" + JSON.stringify(toParams) + ")" }];
+      // }
     }
   })
 

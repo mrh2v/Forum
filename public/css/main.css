@@ -42,6 +42,10 @@
   margin-top: 1%;
 }
 
+.space-bottom {
+  margin-bottom: 1%;
+}
+
 .breadcrumb {
   padding: 4px 10px;
 }
@@ -54,4 +58,19 @@
 
 .padding-title {
   padding: 5px 25px;
+}
+
+.ul-menu {
+  left: 100% !important;
+}
+
+.dmc {
+  border-bottom: 0.5px dashed bisque;
+}
+
+.chude-row {
+  border-bottom: 0.5px dashed beige;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+  background: aliceblue;
 }

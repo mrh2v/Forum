@@ -42,6 +42,127 @@ router.get("/chude/get_all", function(req, res, next) {
 })
 
 
+
+/*CHU DE*/
+router.get("/chude/get_sl_by_dm_all", function(req, res, next) {
+  DANHMUC.findAll({
+    where: {
+      HE_SO: 1
+    }
+  }).then(function(dms) {
+    var kq = {};
+    async.eachSeries(dms, function(dm, callback) {
+      CHUDE.count({
+        where: {
+          ID_DANH_MUC: dm.dataValues.ID
+        }
+      }).then(function(sl) {
+        kq[dm.dataValues.ID] = sl;
+        callback();
+      }).catch(next);
+    }, function(done) {
+      res.send(kq);
+    })
+  }).catch(next);
+})
+
+router.get("/danhmuc/get_chi_tiet", function(req, res, next) {
+  var id = req.query.id;
+  var kq = {};
+  DANHMUC.findOne({
+    where: {
+      ID: id
+    }
+  }).then(function(dm) {
+    if (!dm || !dm.dataValues.ID) return res.sendStatus(404);
+    kq.DANH_MUC = dm;
+    CHUDE.findAll({
+      where: {
+        ID_DANH_MUC: dm.dataValues.ID,
+      },
+      order: [
+        ["THOI_GIAN", "DESC"]
+      ],
+      include: [{ model: USER, as: "NGUOI_TAO", attributes: ["ID", "TEN_DANG_NHAP"] }]
+    }).then(function(cds) {
+      kq.CHUDE = [];
+      async.eachSeries(cds, function(cd, call) {
+        BINHLUAN.findAll({
+          where: {
+            ID_CHU_DE: cd.dataValues.ID
+          },
+          order: [
+            ["THOI_GIAN", "DESC"]
+          ],
+          include: [{ model: USER, as: "USER", attributes: ["ID", "TEN_DANG_NHAP"] }]
+        }).then(function(bl) {
+          cd.dataValues.BINH_LUAN_MOI = bl[0];
+          cd.dataValues.SO_BL = bl.length;
+          kq.CHUDE.push(cd);
+          call();
+        }).catch(next);
+      }, function(done) {
+        res.send(kq)
+      })
+    }).catch(next)
+  }).catch(next)
+})
+
+router.get("/chude/get_by_id_all", function(req, res, next) {
+  var id = req.query.id;
+  var kq = {};
+  DANHMUC.findOne({
+    where: {
+      ID: id
+    }
+  }).then(function(dm) {
+    kq.DANH_MUC = dm;
+    DANHMUC.findAll({
+      where: {
+        ID_DM_CHA: dm.dataValues.ID
+      }
+    }).then(function(dms) {
+      var dmc = [];
+      async.eachSeries(dms, function(item, call) {
+        CHUDE.findAll({
+          where: {
+            ID_DANH_MUC: item.dataValues.ID
+          },
+          order: [
+            ["THOI_GIAN", "DESC"]
+          ]
+        }).then(function(cds) {
+          item.dataValues.baiviet = cds.length;
+          item.dataValues.BAI_VIET_MOI = cds[0];
+          var arrbl = [];
+          for (var i in cds) {
+            arrbl.push(cds[i].dataValues.ID);
+          }
+          BINHLUAN.findAll({
+            where: {
+              ID_CHU_DE: {
+                $in: arrbl
+              }
+            },
+            order: [
+              ["THOI_GIAN", "DESC"]
+            ]
+          }).then(function(sl) {
+            item.dataValues.binhluan = sl.length;
+            item.dataValues.BINH_LUAN_MOI = sl[0];
+            dmc.push(item);
+            call();
+          }).catch(next)
+        }).catch(next);
+      }, function(done) {
+        kq.DMC = dmc;
+        res.send(kq);
+      })
+    }).catch(next);
+  }).catch(next)
+})
+
+
 /*DANH MUC*/
 router.get("/danhmuc/get_all", function(req, res, next) {
   var hienthi = req.query.hienthi;

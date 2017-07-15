@@ -21,13 +21,15 @@
       </div>
       <!-- <div class="collapse navbar-collapse"> -->
       <ul class="nav navbar-nav" style="color: white;font-size: 14px;">
-        <li ng-repeat="dm in danhMucNar" class="li-nar">
+        <li ng-repeat="dm in danhMucNar" class="li-nar" ng-if="dm.HIEN_THI">
           <a ng-bind="dm.TEN_DANH_MUC"></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-style="{'margin-top' : !user ? '1%' : '0%' }">
-        <form name="formLogin" ng-if="!user" ng-include="tempLogin">
-        </form>
+        <div  ng-if="!user" class="text-right" style="width: 80%;float: right;">
+          <form name="formLogin" ng-include="tempLogin">
+          </form>
+        </div>
         <span ng-if="user" ng-include="tempisLogin">
         </span>
       </ul>
@@ -44,7 +46,10 @@
       <li ui-sref="home">
         <a class="glyphicon glyphicon-home"></a>
       </li>
-      <li ng-repeat="title in titles" ui-sref="{{title.state}}"><a ng-bind="title.name"></a></li>
+      <li ng-repeat="title in titles">
+        <a ng-bind="title.name" ui-sref="{{title.state}}" ng-if="$index < titles.length - 1"></a>
+        <b ng-bind="title.name" style="color: #0f0f63;" ng-if="$index == titles.length - 1"></b>
+      </li>
     </ol>
   </div>
   <div style="min-height: 500px;">
@@ -63,10 +68,12 @@
   </span>
   </script>
   <script type="text/ng-template" id="tempLogin.html">
+    <span>
     <input type="text" style="width: 20%;" placeholder="Đăng nhập" required minlength="5" maxlength="50" ng-model="taikhoan.username" />
     <input type="password" style="width: 20%;" placeholder="Mật khẩu" required minlength="6" maxlength="50" ng-model="taikhoan.password" />
     <button class="btn btn-sm" ng-disabled="formLogin.$invalid" ng-click="login(taikhoan)">Đăng nhập</button>
     <b style="color: white; cursor: pointer;" title="Đăng ký" ui-sref="register">Đăng ký</b>
+    </span>
   </script>
   <!-- lib -->
   <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
@@ -87,6 +94,7 @@
   <script type="text/javascript" src="/dangky/register.js"></script>
   <script type="text/javascript" src="/dangnhap/dangnhap.js"></script>
   <script type="text/javascript" src="/timmatkhau/timmatkhau.js"></script>
+  <script type="text/javascript" src="/danhmuc/danhmuc.js"></script>
   <script type="text/javascript" src="/thongtincanhan/thongtincanhan.js"></script>
 </body>
 
