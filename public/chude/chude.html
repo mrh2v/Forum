@@ -1,3 +1,115 @@
-<div class="container">
-  Chu de
+<style type="text/css">
+.ta-scroll-window>.ta-bind {
+    min-height: 200px;
+}
+
+.ta-editor.ta-html,
+.ta-scroll-window.form-control {
+    min-height: 200px;
+}
+</style>
+<div class="container space-top" style="border: 1px solid;">
+    <div style="background-color: #0F4874;" class="row">
+        <div class="col-md-8 padding-title">
+            <span ng-bind="chude.THOI_GIAN | date: 'dd-MM-yyyy HH:ss'" style="color: white;"></span>
+        </div>
+        <div class="col-md-4 padding-title text-right">
+            <span style="color: white;">#1</span>
+        </div>
+    </div>
+    <div style="height: 100px; background-color: aliceblue;" class="row">
+        <div class="col-md-2 text-left">
+            <img ng-src="{{nguoi_tao.AVATAR}}" height="90" width="90" style="border: 1px solid;">
+        </div>
+        <div class="col-md-6" style="margin-left: -6%;">
+            <div class="space-top">
+                <span class="title-name">{{nguoi_tao.TEN_HIEN_THI ? nguoi_tao.TEN_HIEN_THI : nguoi_tao.TEN_DANG_NHAP }}</span>
+            </div>
+            <div class="space-top">
+                Tham gia : <i ng-bind="nguoi_tao.THOI_GIAN_TAO | date : 'dd-MM-yyyy'"></i>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row space-top">
+        <div ng-bind-html="chude.NOI_DUNG" class="col-md-10 col-md-offset-1"></div>
+    </div>
+    <div class="row space-top" style="background-color: rgba(128, 128, 128, 0.54);">
+        <div class="col-md-6">
+            <button>
+                <i class="fa fa-thumbs-up"></i> CẢM ƠN
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a>Trả lời</a> | <a><i class="fa fa-comments-o"></i> Trả lời kèm trích dẫn</a>
+        </div>
+    </div>
+</div>
+<div class="container space-top" style="border: 1px solid;" ng-repeat="bl in binhluans">
+    <div style="background-color: #0F4874;" class="row">
+        <div class="col-md-8 padding-title">
+            <span ng-bind="bl.THOI_GIAN | date: 'dd-MM-yyyy HH:ss'" style="color: white;"></span>
+        </div>
+        <div class="col-md-4 padding-title text-right">
+            <span style="color: white;">#{{$index + 2}}</span>
+        </div>
+    </div>
+    <div style="height: 100px; background-color: aliceblue;" class="row">
+        <div class="col-md-2 text-left">
+            <img ng-src="{{bl.USER.AVATAR || anhthaythe}}" height="90" width="90" style="border: 1px solid;">
+        </div>
+        <div class="col-md-6" style="margin-left: -6%;">
+            <div class="space-top">
+                <span class="title-name">{{bl.USER.TEN_HIEN_THI ? bl.USER.TEN_HIEN_THI : bl.USER.TEN_DANG_NHAP }}</span>
+            </div>
+            <div class="space-top">
+                Tham gia : <i ng-bind="bl.USER.THOI_GIAN_TAO | date : 'dd-MM-yyyy'"></i>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row space-top">
+        <div ng-bind-html="bl.NOI_DUNG" class="col-md-10 col-md-offset-1"></div>
+    </div>
+    <div class="row space-top" style="background-color: rgba(128, 128, 128, 0.54);">
+        <div class="col-md-6">
+            <button>
+                <i class="fa fa-thumbs-up"></i> CẢM ƠN
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a>Trả lời</a> | <a><i class="fa fa-comments-o"></i> Trả lời kèm trích dẫn</a>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container" style="border: 1px solid; margin-top: 3%;">
+    <div style="background-color: #0F4874;" class="row">
+        <div class="col-md-8 padding-title" style="color: white;">
+            <span><i class="fa fa-reply"></i>   Trả lời</span>
+        </div>
+        <div class="col-md-4 padding-title text-right">
+            <span style="color: white;"></span>
+        </div>
+    </div>
+    <div class="col-md-12 space-top" style="margin-bottom: 1%;" ng-repeat="file in files">
+        <div class="col-md-5">
+            <button ng-class="{'btn' : !file.name, 'btn btn-success': file.name}" ngf-select="upload($file)" ng-disabled="file.url">{{file.name ? file.name : "Upload tập tin ..."}}</button>
+            <button class="btn btn-primary" ng-click="saveFile($index)" ng-if="!file.url" ng-disabled="!file.name">Lấy đường dẫn</button>
+        </div>
+        <div class="col-md-7">
+            <input type="text" class="form-control" placeholder="Đường dẫn file" ng-model="file.url">
+        </div>
+    </div>
+    <div class="space-top col-md-10 col-md-offset-1 register-div">
+        <text-angular ng-model="replyContent"></text-angular>
+    </div>
+    <div class="row  text-right">
+        <span style="margin-right: 5%;">
+	    	<button class="btn btn-primary" ng-disabled="replyContent.length == 0" ng-click="saveComment(replyContent)">Đăng bình luận</button>
+	    	<button class="btn btn-primary" ng-click="cancelComment()">Hủy bỏ</button>
+    	</span>
+    </div>
 </div>

@@ -1,41 +1,73 @@
-<div class="container space-top">
-  <button class="btn btn-primary btn-sm" ng-click="createChuDe()">
-    <i class="glyphicon glyphicon-plus"></i> Gửi chủ đề mới
-  </button>
+<div ng-hide="creatDm">
+    <div class="container space-top">
+        <button class="btn btn-primary btn-sm" ng-click="createChuDe()">
+            <i class="glyphicon glyphicon-plus"></i> Gửi chủ đề mới
+        </button>
+    </div>
+    <div class="container space-top">
+        <div style="background-color: cadetblue;" class="row">
+            <div class="col-md-9 padding-title">
+                <a style="font-weight: 700;cursor: pointer;">Chủ để/ Người gửi</a>
+            </div>
+            <div class="col-md-3 padding-title">
+                <b>Bình luận mới nhất</b>
+            </div>
+        </div>
+        <div class="row chude-row" ng-repeat="cd in chude">
+            <div class="col-md-8">
+                <div class="col-md-1 text-left" style="color: black;margin-left: -3%;">
+                    <i class="fa fa-newspaper-o fa-2x"></i>
+                </div>
+                <div class="col-md-11">
+                    <div>
+                        <a ng-bind="cd.TEN_CHU_DE" ng-click="goChuDe(cd)"></a>
+                    </div>
+                    <div>
+                        <i>Đăng vào {{cd.THOI_GIAN|date: 'HH:mm dd/MM/yyyy'}} bởi </i><span style="color:black;">{{cd.NGUOI_TAO.TEN_DANG_NHAP}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div>
+                    <i class="fa fa-thumbs-o-up"></i> {{cd.SL_THICH}}
+                </div>
+                <div>
+                    <i class="glyphicon glyphicon-eye-open"></i> {{cd.SL_XEM}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                post
+            </div>
+        </div>
+    </div>
 </div>
-<div class="container space-top">
-  <div style="background-color: cadetblue;" class="row">
-    <div class="col-md-9 padding-title">
-      <a style="font-weight: 700;cursor: pointer;">Chủ để/ Người gửi</a>
+<div class="container space-top" ng-if="creatDm">
+    <div class="register-div">
+        <h4>Trình soạn thảo chủ đề</h4>
     </div>
-    <div class="col-md-3 padding-title">
-      <b>Bình luận mới nhất</b>
-    </div>
-  </div>
-  <div class="row chude-row" ng-repeat="cd in chude">
-    <div class="col-md-8">
-      <div class="col-md-1 text-left" style="color: black;margin-left: -3%;">
-        <i class="fa fa-newspaper-o fa-2x"></i>
-      </div>
-      <div class="col-md-11">
-        <div>
-          <a ng-bind="cd.TEN_CHU_DE" ng-click="goChuDe(cd)"></a>
+    <div class="col-md-10 col-md-offset-1">
+        <form class="form-horizontal" name="formChuDe">
+            <div class="form-group">
+                <label class="control-label">Tên chủ đề</label>
+                <input type="text" class="form-control" placeholder="Tên chủ đề" minlength="20" maxlength="255" name="tenchude" required="true" ng-model="dmc.chude.TEN_CHU_DE"/>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 1%;" ng-repeat="file in files">
+                <div class="col-md-5">
+                    <button ng-class="{'btn' : !file.name, 'btn btn-success': file.name}" ngf-select="upload($file)" ng-disabled="file.url">{{file.name ? file.name : "Upload tập tin ..."}}</button>
+                    <button class="btn btn-primary" ng-click="saveFile($index)" ng-if="!file.url" ng-disabled="!file.name">Lấy đường dẫn</button>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" placeholder="Đường dẫn file" ng-model="file.url">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Nội dung</label>
+                <text-angular ng-model="dmc.chude.NOI_DUNG"></text-angular>
+            </div>
+        </form>
+        <div class="col-md-12 text-right">
+            <button class="btn btn-success" ng-click="saveChuDe(dmc.chude, formChuDe.$invalid)" ng-disabled="formChuDe.$invalid">Đăng chủ đề</button>
+            <button class="btn btn-warning" ng-click="cancel()">Hủy bỏ</button>
         </div>
-        <div>
-          <i>Đăng vào {{cd.THOI_GIAN|date: 'HH:mm dd/MM/yyyy'}} bởi </i><span style="color:black;">{{cd.NGUOI_TAO.TEN_DANG_NHAP}}</span>
-        </div>
-      </div>
     </div>
-    <div class="col-md-1">
-      <div>
-        <i class="fa fa-thumbs-o-up"></i> {{cd.SL_THICH}}
-      </div>
-      <div>
-        <i class="glyphicon glyphicon-eye-open"></i> {{cd.SL_XEM}}
-      </div>
-    </div>
-    <div class="col-md-3">
-      post
-    </div>
-  </div>
 </div>
